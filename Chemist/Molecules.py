@@ -14,8 +14,6 @@ molecules = {
     'Hydrochloric-acid': ['HCl', 36.461],
     'Hydroxide':         ['OH-', 17.007],
 
-
-
     # Nobel gassess are monoatmoic:
 
     'Heluim-gas':        ['He', 4.003],
@@ -111,12 +109,12 @@ molecules = {
 
 def whatis(name):
     name = name[0]
-    print(molecules[name][0]) if name in molecules else print("Not found!")
+    print(molecules[name][0]) if name in molecules else print('Not found!')
 
 
 def molecule():
-    print("Here are the molecules that are saved in. you can use them in getmass or convert, Case sensitive")
+    print('Here are the molecules that are saved in. you can use them in getmass or convert, Case sensitive')
     for item in Molecules.molecules:
         print(item + '\t\t' + Molecules.molecules[item][0] + '\t' + str(Molecules.molecules[item][1]))
         print(item, end='')
-        print(f"{item:>18}{Molecules.molecules[item][0]:>12}{Molecules.molecules[item][1]:>12}")
+        print(f'{item:>18}{Molecules.molecules[item][0]:>12}{Molecules.molecules[item][1]:>12}')

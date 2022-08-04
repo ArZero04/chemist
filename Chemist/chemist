@@ -8,23 +8,23 @@ import Molecules
 
 
 def help():
-    print("getmass: gives the molecular mass of a molecule. Syntax: 'getmass [element]'.")
-    print("convert: converts an amount of a substance depending. Syntax: 'convert [amount] [unit] [molecule]'.")
-    print("preassure: converts the unit of a specific preassure. Syntax: 'preassure [amount] [initial unit] [final unit]'")
-    print("|available units are: atm, PSI, Pa, kPa, Bar and torr.")
-    print("energy: converts the unit of a specific amount of energy. Syntax: 'energy [amount] [initial unit] [final unit]'")
-    print("atomicnumber: gives the atomic number of an element. Syntax: 'atomicnumber [element]'.")
-    print("econf: prints the electron configuration table.")
-    print("econfig: gives the electron configuration of a specific element. Syntax: 'econfig [element]'.")
-    print("showtable: highlights an element on the periodic table. Syntax: 'showtable [element]'.")
-    print("molecule: Shows the saved in molecules in the Molecule module.")
-    print("calc: Does basic arithmatic calculations. Syntax: 'calc [num1] [operation] [num2]'.")
-    print("name: gives the name of an element, name H will output Hydrogen.")
-    print("clear: clears the terminal.")
-    print("exit: closes the terminal.")
+    print('getmass: gives the molecular mass of a molecule. Syntax: 'getmass [element]'.')
+    print('convert: converts an amount of a substance depending. Syntax: 'convert [amount] [unit] [molecule]'.')
+    print('preassure: converts the unit of a specific preassure. Syntax: 'preassure [amount] [initial unit] [final unit]'')
+    print('|available units are: atm, PSI, Pa, kPa, Bar and torr.')
+    print('energy: converts the unit of a specific amount of energy. Syntax: 'energy [amount] [initial unit] [final unit]'')
+    print('atomicnumber: gives the atomic number of an element. Syntax: 'atomicnumber [element]'.')
+    print('econf: prints the electron configuration table.')
+    print('econfig: gives the electron configuration of a specific element. Syntax: 'econfig [element]'.')
+    print('showtable: highlights an element on the periodic table. Syntax: 'showtable [element]'.')
+    print('molecule: Shows the saved in molecules in the Molecule module.')
+    print('calc: Does basic arithmatic calculations. Syntax: 'calc [num1] [operation] [num2]'.')
+    print('name: gives the name of an element, name H will output Hydrogen.')
+    print('clear: clears the terminal.')
+    print('exit: closes the terminal.')
 
 def default():
-    print("Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.")
+    print('Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.')
 
 def calc(x, specific):
     r = 2
@@ -33,13 +33,13 @@ def calc(x, specific):
     op = x[1]
     if specific == True:
         r = 9
-    if op == "+":
+    if op == '+':
         result = n1 + n2
-    if op == "-":
+    if op == '-':
         result = n1 - n2
-    if op == "*":
+    if op == '*':
         result = n1 * n2
-    if op == "/":
+    if op == '/':
         if n2 == 0:
             print('Cannot divide by zero!')
             return                   
@@ -53,7 +53,7 @@ def get_func(input):
         array = input
         array.pop(0)
         if len(array) == 0:
-            print("No input recieved!")
+            print('No input recieved!')
             return
         f = 0
 	
@@ -70,35 +70,35 @@ def get_func(input):
         x = array[1:]
         
         actions = {
-            "getmass": Chemistry.get_molecular_mass,
-            "preassure": Chemistry.preassure_unit_conversion,
-            "pressure": Chemistry.preassure_unit_conversion, #Dublicate
-            "convert": Chemistry.unit_conversion,
-            "energy": Chemistry.energy_conversion,
-            "temp": Chemistry.temp_change,
-            "showtable": Chemistry.show_element,
-            "atomicnumber": Chemistry.get_atomic_number,
-            "econf": Chemistry.econfig,
-            "ect": Chemistry.ect,
-            "name": Chemistry.get_name,
-            "whatis": Molecules.whatis,
-            "calc": calc,
-            "exit": exit,
+            'getmass': Chemistry.get_molecular_mass,
+            'preassure': Chemistry.preassure_unit_conversion,
+            'pressure': Chemistry.preassure_unit_conversion, #Dublicate
+            'convert': Chemistry.unit_conversion,
+            'energy': Chemistry.energy_conversion,
+            'temp': Chemistry.temp_change,
+            'showtable': Chemistry.show_element,
+            'atomicnumber': Chemistry.get_atomic_number,
+            'econf': Chemistry.econfig,
+            'ect': Chemistry.ect,
+            'name': Chemistry.get_name,
+            'whatis': Molecules.whatis,
+            'calc': calc,
+            'exit': exit,
 
             } 
         action = actions.get(func, default)
-        if func == "getmass" or func == "atomicnumber" or func == "name":
-            print(action(array[1])) if len(array) == 2 else print("Invalid Input!")
+        if func == 'getmass' or func == 'atomicnumber' or func == 'name':
+            print(action(array[1])) if len(array) == 2 else print('Invalid Input!')
             return
-        elif func == "showtable" or func == "econf" or func == "whatis":
+        elif func == 'showtable' or func == 'econf' or func == 'whatis':
             action(x)
             return
-        elif func == "ect":
+        elif func == 'ect':
             action()
             return
         print(action(x, specific))
         
 
-if __name__ == "__main__":  
+if __name__ == '__main__':  
     get_func(argv)
     

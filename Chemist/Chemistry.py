@@ -11,7 +11,7 @@ PSI = 14.6959
 Pa = 101325
 Bar = 1.01325
 
-orbital_name = ["1s", "2s", "2p", "3s", "3p", "3d", "4s", "4p", "4d", "4f", "5s", "5p", "5d", "5f", "6s", "6p", "6d", "7s", "7p", "8s"]
+orbital_name = ['1s', '2s', '2p', '3s', '3p', '3d', '4s', '4p', '4d', '4f', '5s', '5p', '5d', '5f', '6s', '6p', '6d', '7s', '7p', '8s']
 orbital_num = [2, 2, 6, 2, 6, 10, 2, 6, 10, 16, 2, 6, 10, 16, 2, 6, 10, 2, 6, 2]
 
 Periodic_Table = {
@@ -34,17 +34,17 @@ Periodic_Table = {
     'Cl': ['Chlorine', 17, 35.453, 'Halogen'],
     'Ar': ['Argon', 18, 39.948, 'Noble Gas'],
     'K': ['Potassium', 19, 30.098, 'Halogen'],
-    'Ca': ["Calcium", 20, 40.078, 'Alkali Metal'],
-    'Sc': ["Scandium", 21, 44.956, 'Transition Metal'],
-    'Ti': ["Titanium", 22, 47.88, 'Transition Metal'],
-    'V': ["Vanadium", 23, 50.942, 'Transition Metal'],
-    'Cr': ["Chromium", 24, 51.996, 'Transition Metal'],
-    'Mn': ["Manganese", 25, 54.938, 'Transition Metal'],
-    'Fe': ["Iron", 26, 55.933, 'Transition Metal'],
-    'Co': ["Cobalt", 27, 58.633, 'Transition Metal'],
-    'Ni': ["Nickel", 28, 58.693, 'Transition Metal'],
-    'Cu': ["Copper", 29, 63.546, 'Transition Metal'],
-    'Zn': ["Zinc", 30, 65.39, 'Transition Metal'],
+    'Ca': ['Calcium', 20, 40.078, 'Alkali Metal'],
+    'Sc': ['Scandium', 21, 44.956, 'Transition Metal'],
+    'Ti': ['Titanium', 22, 47.88, 'Transition Metal'],
+    'V': ['Vanadium', 23, 50.942, 'Transition Metal'],
+    'Cr': ['Chromium', 24, 51.996, 'Transition Metal'],
+    'Mn': ['Manganese', 25, 54.938, 'Transition Metal'],
+    'Fe': ['Iron', 26, 55.933, 'Transition Metal'],
+    'Co': ['Cobalt', 27, 58.633, 'Transition Metal'],
+    'Ni': ['Nickel', 28, 58.693, 'Transition Metal'],
+    'Cu': ['Copper', 29, 63.546, 'Transition Metal'],
+    'Zn': ['Zinc', 30, 65.39, 'Transition Metal'],
     'Ga': ['Gallium', 31, 69.732, 'Other Metal'],
     'Ge': ['Germanium', 32, 72.61, 'Other Metal'],
     'As': ['Arsenic', 33, 74.922, 'Non Metal'],
@@ -234,8 +234,8 @@ def get_atomic_number(Element):
 def get_molecular_mass(input, Unit = True):
     Elements = re.findall('[A-Z][^A-Z]*', input)
     result = 0
-    unit = " g/mol "
-    nunit = ""
+    unit = ' g/mol '
+    nunit = ''
     i = -1
     for Element in Elements:
         nElement = Element
@@ -248,7 +248,7 @@ def get_molecular_mass(input, Unit = True):
             else:
                 result += Periodic_Table[Element][2] 
         else:
-            match = re.match(r"([a-z]+)([0-9]+)", Element, re.I)
+            match = re.match(r'([a-z]+)([0-9]+)', Element, re.I)
             if match:
                 items = match.groups()
             result += Periodic_Table[items[0]][2] * float(items[1]) 
@@ -257,7 +257,7 @@ def get_molecular_mass(input, Unit = True):
     if result == 0:
         return 'Error!'
     if Unit == True:
-        return str(result) + " " + nunit + unit
+        return str(result) + ' ' + nunit + unit
     elif Unit == False:
         return [result, nunit]
 
@@ -272,7 +272,7 @@ def splice(input, type = 1):
         if x[1] == 'gram' or x[1] == 'grams':
             x[1] = 'g'
         try:
-            x.remove("of")
+            x.remove('of')
             return x
         except:
             return x
@@ -301,12 +301,12 @@ def unit_conversion(x, specific = False,  Unit = True):
         molar_ratio = get_molecular_mass(molecule, False)
         if x[1] in mol:
             out = round(amount * molar_ratio[0], r)
-            a = "g "
+            a = 'g '
         elif x[1] in g:
             out = round(amount / molar_ratio[0], r)
-            a = "mol "
+            a = 'mol '
         if Unit == True:
-            return str(out) + " " + a + molar_ratio[1]
+            return str(out) + ' ' + a + molar_ratio[1]
         return out
     except:
         return 'Error'
@@ -318,19 +318,19 @@ def to_atm(input, show_unit = True):
     amount = input[0]
     unit = input[1].lower()
     result = 'null'
-    if unit == "torr":
+    if unit == 'torr':
         result = amount / torr
     elif unit == 'mmhg':
         result = amount / mmHG
-    elif unit == "psi":
+    elif unit == 'psi':
         result = amount / PSI
-    elif unit == "pa":
+    elif unit == 'pa':
         result = amount / Pa
-    elif unit == "kpa":
+    elif unit == 'kpa':
         result = amount / Pa / 1000
-    elif unit == "bar":
+    elif unit == 'bar':
         result = amount / Bar
-    elif unit == "atm":
+    elif unit == 'atm':
         result = amount
     unit = ' atm'
 
@@ -350,19 +350,19 @@ def preassure_unit_conversion(input, specific = False,show_unit = True):
         unit2 = input[2].lower()
         atm = float(to_atm([amount, unit], False))
         result = 'null'
-        if unit2 == "torr":
+        if unit2 == 'torr':
             result = atm * torr
             unit2 = ' torr'
         elif unit2 == 'mmhg':
             result = atm * mmHG
             unit2 = ' mmHg'
-        elif unit2 == "pa":
+        elif unit2 == 'pa':
             result = atm / Pa
             unit2 = ' Pa'
-        elif unit2 == "kpa":
+        elif unit2 == 'kpa':
             result = atm * Pa / 1000
             unit2 = ' kPa'
-        elif unit2 == "psi":
+        elif unit2 == 'psi':
             result = atm * PSI
             unit2 = ' PSI'
         elif unit2 == 'bar':
@@ -373,7 +373,7 @@ def preassure_unit_conversion(input, specific = False,show_unit = True):
             unit2 = ' atm'    
         if show_unit == True:
             result = round(result, r)
-            out = str(result) + " " + unit2
+            out = str(result) + ' ' + unit2
             return out
         return result
     except:
@@ -383,58 +383,58 @@ def energy_conversion(input, specific = False, show_unit = True):
     amount = float(input[0])
     unit = input[1].lower()
     unit2 = input[2].lower()
-    if unit == "cal":
-        if unit2 == "kcal":
+    if unit == 'cal':
+        if unit2 == 'kcal':
             result = amount / 1000
-            unit3="KCal"
-        elif unit2 == "joule".casefold():
+            unit3='KCal'
+        elif unit2 == 'joule'.casefold():
             result = amount * 4.184
-            unit3="Joule"
-        elif unit2 == "kjoule".casefold():
+            unit3='Joule'
+        elif unit2 == 'kjoule'.casefold():
             result = amount * 0.004184
-            unit3="KJoule"
+            unit3='KJoule'
         else:
-            return str(amount) + " Cal"
-    elif unit == "kcal".casefold():
-        if unit2 == "cal".casefold():
+            return str(amount) + ' Cal'
+    elif unit == 'kcal'.casefold():
+        if unit2 == 'cal'.casefold():
             result = amount * 1000
-            unit3="Cal"
-        elif unit2 == "joule".casefold():
+            unit3='Cal'
+        elif unit2 == 'joule'.casefold():
             result = amount * 4184
-            unit3="Joule"
-        elif unit2 == "kjoule".casefold():
+            unit3='Joule'
+        elif unit2 == 'kjoule'.casefold():
             result = amount * 4.184
-            unit3="KJoule"
+            unit3='KJoule'
         else:
-            return str(amount) + " Cal"
-    elif unit == "joule".casefold(): 
-        if unit2 == "kjoule":
+            return str(amount) + ' Cal'
+    elif unit == 'joule'.casefold(): 
+        if unit2 == 'kjoule':
             result = amount / 1000
-            unit3="KJoule"
-        elif unit2 == "kcal":
+            unit3='KJoule'
+        elif unit2 == 'kcal':
             result = amount / 4184
-            unit3="KCal"
-        elif unit2 == "cal":
+            unit3='KCal'
+        elif unit2 == 'cal':
             result = amount / 4.184
-            unit3="Cal"
+            unit3='Cal'
         else:
-            return str(amount) + " Joule"
-    elif unit == "kjoule":
-        if unit2 == "joule":
+            return str(amount) + ' Joule'
+    elif unit == 'kjoule':
+        if unit2 == 'joule':
             result = amount * 1000
-            unit3="Joule"
-        elif unit2 == "kcal":
+            unit3='Joule'
+        elif unit2 == 'kcal':
             result = amount / 4184
-            unit3="KCal"
-        elif unit2 == "cal":
+            unit3='KCal'
+        elif unit2 == 'cal':
             result = amount / 0.04184
-            unit3="Cal"
+            unit3='Cal'
         else:
-            return str(amount) + " KJoule"
+            return str(amount) + ' KJoule'
     if show_unit == True:
         if specific == True:
-            return str(round(result, 7)) + " " + unit3
-        return str(result) + " " + unit3
+            return str(round(result, 7)) + ' ' + unit3
+        return str(result) + ' ' + unit3
     return result
 
 def to_kelvin(input, target):
@@ -475,7 +475,7 @@ def temp_change(input, specific = False, show_element = True):
 def ect():
     i = 0
     for e in orbital_num:
-        print(orbital_name[i] + str(e), end="  ")
+        print(orbital_name[i] + str(e), end='  ')
         i += 1
     print()
 
@@ -487,8 +487,8 @@ def econfig(input):
         remain = e
         if element <= 0:
             remain = e + element
-            print(orbital_name[i] + str(remain), end="  ")
+            print(orbital_name[i] + str(remain), end='  ')
             break
-        print(orbital_name[i] + str(remain), end="  ")
+        print(orbital_name[i] + str(remain), end='  ')
         i += 1
     print()
