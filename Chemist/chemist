@@ -8,22 +8,23 @@ import Molecules
 
 
 def help():
-    print('getmass: gives the molecular mass of a molecule. Syntax: 'getmass [element]'.')
-    print('convert: converts an amount of a substance depending. Syntax: 'convert [amount] [unit] [molecule]'.')
-    print('preassure: converts the unit of a specific preassure. Syntax: 'preassure [amount] [initial unit] [final unit]'')
-    print('|available units are: atm, PSI, Pa, kPa, Bar and torr.')
-    print('energy: converts the unit of a specific amount of energy. Syntax: 'energy [amount] [initial unit] [final unit]'')
-    print('atomicnumber: gives the atomic number of an element. Syntax: 'atomicnumber [element]'.')
+    print('getmass: gives the molecular mass of a molecule. Syntax: "getmass [element]".')
+    print('convert: converts an amount of a substance depending. Syntax: "convert [amount] [unit] [molecule]".')
+    print('preassure: converts the unit of a specific preassure. Syntax: "preassure [amount] [initial unit] [final unit]".')
+    print('|available units are: "atm, PSI, Pa, kPa, Bar and torr".')
+    print('energy: converts the unit of a specific amount of energy. Syntax: "energy [amount] [initial unit] [final unit]".')
+    print('atomicnumber: gives the atomic number of an element. Syntax: "atomicnumber [element]".')
     print('econf: prints the electron configuration table.')
-    print('econfig: gives the electron configuration of a specific element. Syntax: 'econfig [element]'.')
-    print('showtable: highlights an element on the periodic table. Syntax: 'showtable [element]'.')
+    print('econfig: gives the electron configuration of a specific element. Syntax: "econfig [element]".')
+    print('showtable: highlights an element on the periodic table. Syntax: "showtable [element]"".')
     print('molecule: Shows the saved in molecules in the Molecule module.')
-    print('calc: Does basic arithmatic calculations. Syntax: 'calc [num1] [operation] [num2]'.')
+    print('calc: Does basic arithmatic calculations. Syntax: "calc [num1] [operation] [num2]".')
     print('name: gives the name of an element, name H will output Hydrogen.')
     print('clear: clears the terminal.')
     print('exit: closes the terminal.')
 
-def default():
+#need to get rid of these parameters
+def default(a, b):
     print('Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.')
 
 def calc(x, specific):
@@ -83,21 +84,23 @@ def get_func(input):
             'name': Chemistry.get_name,
             'whatis': Molecules.whatis,
             'calc': calc,
-            'exit': exit,
+            'help': help,
 
             } 
         action = actions.get(func, default)
+
+        # This part is annoying
         if func == 'getmass' or func == 'atomicnumber' or func == 'name':
             print(action(array[1])) if len(array) == 2 else print('Invalid Input!')
             return
         elif func == 'showtable' or func == 'econf' or func == 'whatis':
             action(x)
             return
-        elif func == 'ect':
+        elif func == 'ect' or func == 'help':
             action()
             return
         print(action(x, specific))
-        
+        ###########################
 
 if __name__ == '__main__':  
     get_func(argv)
