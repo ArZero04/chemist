@@ -24,10 +24,12 @@ def help():
     print('exit: closes the terminal.')
 
 #need to get rid of these parameters
-def default(a, b):
+def default():
     print('Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.')
 
 def calc(x, specific):
+    if len(x) < 3:
+        return "Invalid Input!"
     r = 2
     n1 = float(x[0])
     n2 = float(x[2])
@@ -87,20 +89,29 @@ def get_func(input):
             'help': help,
 
             } 
+        
+        arguments = {
+            'getmass': 1,
+            'preassure': 3,
+            'pressure': 3, #Dublicate
+            'convert': 3,
+            'energy': 3,
+            'temp':   3,
+            'showtable': 1, 
+            'econf': 1,
+            'whatis': 1,
+            'atomicnumber': 1,
+            'name': 1,
+            'calc': 3,
+            
+            }
         action = actions.get(func, default)
-
-        # This part is annoying
-        if func == 'getmass' or func == 'atomicnumber' or func == 'name':
-            print(action(array[1])) if len(array) == 2 else print('Invalid Input!')
-            return
-        elif func == 'showtable' or func == 'econf' or func == 'whatis':
-            action(x)
-            return
-        elif func == 'ect' or func == 'help':
+        args = arguments.get(func, 0)
+        if args == 0:
             action()
             return
-        print(action(x, specific))
-        ###########################
+        print(action(x) if len(x) == args else print("Invalid Input!"))
+
 
 if __name__ == '__main__':  
     get_func(argv)
