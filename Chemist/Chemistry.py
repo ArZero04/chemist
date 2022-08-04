@@ -1,5 +1,6 @@
 import Molecules
 import re
+import os
 from colorama import init
 from termcolor import colored
 
@@ -9,7 +10,6 @@ mmHG = 760.0021
 PSI = 14.6959
 Pa = 101325
 Bar = 1.01325
-
 
 orbital_name = ["1s", "2s", "2p", "3s", "3p", "3d", "4s", "4p", "4d", "4f", "5s", "5p", "5d", "5f", "6s", "6p", "6d", "7s", "7p", "8s"]
 orbital_num = [2, 2, 6, 2, 6, 10, 2, 6, 10, 16, 2, 6, 10, 16, 2, 6, 10, 2, 6, 2]
@@ -149,8 +149,9 @@ Periodic_Table_Visual = [
 
 
 def show_element(input): 
-    if len(input) > 1:
-        input = input[1]
+    os.system('cls' if os.name == 'nt' else 'clear') 
+    if len(input) == 1:
+        input = input[0]
     else:
         input = ''
     x = input
@@ -195,11 +196,8 @@ def get_type(Element):
         return 
 
 def get_keys_from_value(d, val):
-    #n = ['H2O', 18.015]
     a = []
     for i in d:
-        #print(i)
-        #print(d[i])
         if d[i][0] == val:
             a.append(i)
     if len(a) == 1:
@@ -207,7 +205,6 @@ def get_keys_from_value(d, val):
     return a
 
 def get_name(Element):
-    #print(Element)
     if Element in Periodic_Table:
         return Periodic_Table[Element][0]
     
@@ -235,41 +232,35 @@ def get_atomic_number(Element):
 
 
 def get_molecular_mass(input, Unit = True):
-    #try:
-        Elements = re.findall('[A-Z][^A-Z]*', input)
-        result = 0
-        unit = " g/mol "
-        nunit = ""
-        i = -1
-        for Element in Elements:
-            nElement = Element
-            i += 1
-            if Element.isalpha():
+    Elements = re.findall('[A-Z][^A-Z]*', input)
+    result = 0
+    unit = " g/mol "
+    nunit = ""
+    i = -1
+    for Element in Elements:
+        nElement = Element
+        i += 1
+        if Element.isalpha():
                 
-                if Element in Molecules.molecules:
-                    nElement = Molecules.molecules[Element][0]
-                    result += Molecules.molecules[Element][1]
-                    #print(Elements[i])
-                    #Elements[i] = Molecules.molecules[Element][0]
-                    #print(Elements[i])
-                else:
-                    result += Periodic_Table[Element][2]
-            
+            if Element in Molecules.molecules:
+                nElement = Molecules.molecules[Element][0]
+                result += Molecules.molecules[Element][1]
             else:
-                match = re.match(r"([a-z]+)([0-9]+)", Element, re.I)
-                if match:
-                    items = match.groups()
-                result += Periodic_Table[items[0]][2] * float(items[1]) 
-            nunit += nElement
+                result += Periodic_Table[Element][2] 
+        else:
+            match = re.match(r"([a-z]+)([0-9]+)", Element, re.I)
+            if match:
+                items = match.groups()
+            result += Periodic_Table[items[0]][2] * float(items[1]) 
+        nunit += nElement
 
-        if result == 0:
-            return 'Error!'
-        if Unit == True:
-            return str(result) + " " + nunit + unit
-        elif Unit == False:
-            return [result, nunit]
-    #except:
-    #    return 'Error'
+    if result == 0:
+        return 'Error!'
+    if Unit == True:
+        return str(result) + " " + nunit + unit
+    elif Unit == False:
+        return [result, nunit]
+
 
 
 
@@ -299,8 +290,7 @@ def splice(input, type = 1):
 
 
 def unit_conversion(x, specific = False,  Unit = True):
-    try:
-
+    try: #fix this
         amount = float(x[0])
         molecule = x[2]
         r = 3
@@ -351,7 +341,7 @@ def to_atm(input, show_unit = True):
     return result
 
 def preassure_unit_conversion(input, specific = False,show_unit = True):
-    try:
+    try: #fix this
         r = 2
         if specific == True:
             r = 7
@@ -390,7 +380,6 @@ def preassure_unit_conversion(input, specific = False,show_unit = True):
         return 'Error'
 
 def energy_conversion(input, specific = False, show_unit = True):
-    #print(input)
     amount = float(input[0])
     unit = input[1].lower()
     unit2 = input[2].lower()
@@ -459,12 +448,10 @@ def to_kelvin(input, target):
     return result
 
 def temp_change(input, specific = False, show_element = True):
-    try:
+    try: #fix this
         amount = input[0]
         unit = input[1]
         unit2 = input[2].upper()
-
-
         amount = float(amount)
         namount = to_kelvin(amount,  unit)
         unit = unit.upper()
@@ -490,20 +477,18 @@ def ect():
     for e in orbital_num:
         print(orbital_name[i] + str(e), end="  ")
         i += 1
+    print()
 
-
-def econfig(element):
+def econfig(input):
     i = 0
+    element = get_atomic_number(input[0])
     for e in orbital_num:
         element -= e
-
         remain = e
-
         if element <= 0:
             remain = e + element
             print(orbital_name[i] + str(remain), end="  ")
             break
-
         print(orbital_name[i] + str(remain), end="  ")
         i += 1
     print()

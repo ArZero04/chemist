@@ -7,9 +7,47 @@ import Chemistry
 import Molecules
 
 
+def help():
+    print("getmass: gives the molecular mass of a molecule. Syntax: 'getmass [element]'.")
+    print("convert: converts an amount of a substance depending. Syntax: 'convert [amount] [unit] [molecule]'.")
+    print("preassure: converts the unit of a specific preassure. Syntax: 'preassure [amount] [initial unit] [final unit]'")
+    print("|available units are: atm, PSI, Pa, kPa, Bar and torr.")
+    print("energy: converts the unit of a specific amount of energy. Syntax: 'energy [amount] [initial unit] [final unit]'")
+    print("atomicnumber: gives the atomic number of an element. Syntax: 'atomicnumber [element]'.")
+    print("econf: prints the electron configuration table.")
+    print("econfig: gives the electron configuration of a specific element. Syntax: 'econfig [element]'.")
+    print("showtable: highlights an element on the periodic table. Syntax: 'showtable [element]'.")
+    print("molecule: Shows the saved in molecules in the Molecule module.")
+    print("calc: Does basic arithmatic calculations. Syntax: 'calc [num1] [operation] [num2]'.")
+    print("name: gives the name of an element, name H will output Hydrogen.")
+    print("clear: clears the terminal.")
+    print("exit: closes the terminal.")
+
+def default():
+    print("Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.")
+
+def calc(x, specific):
+    r = 2
+    n1 = float(x[0])
+    n2 = float(x[2])
+    op = x[1]
+    if specific == True:
+        r = 9
+    if op == "+":
+        result = n1 + n2
+    if op == "-":
+        result = n1 - n2
+    if op == "*":
+        result = n1 * n2
+    if op == "/":
+        if n2 == 0:
+            print('Cannot divide by zero!')
+            return                   
+        result = n1 / n2
+    return round(result, r)
 
 def get_func(input):
-    #try:
+
         result = 'null'
         specific = False
         array = input
@@ -27,112 +65,40 @@ def get_func(input):
             if '-s' in array:
                 array.remove('-s')
                 specific = True
-        
-        #while f < len(array):
-        #    if array[f] in keywords:
-        #        del array[f]
-        #        continue
-        #    f += 1
-                
-        
-            
+                   
         func = array[0] 
         x = array[1:]
-        #try:
-        #    if array[1] == '-s' or array[1] == '-S':
-        #        x = array[2:]
-        #        specific = True
-        #except:
-        #    pass
         
-        
-            
-        try:
-            if func == "getmass":
-                result = Chemistry.get_molecular_mass(' '.join(array[1:]))
-                print(result)
-            elif func == "preassure" or func == "pressure":
-                result = Chemistry.preassure_unit_conversion(x, specific)
-                print(result)
-            elif func == "convert":
-                result = Chemistry.unit_conversion(x, specific)
-                print(result)
-            elif func == "energy":
-                result = Chemistry.energy_conversion(x, specific, True)
-                print(result)
-                pass
-            elif func == "temp":
-                result = Chemistry.temp_change(x, specific)
-                print(result)
-            elif func == "atomicnumber":
-                result = Chemistry.get_atomic_number(array[1])
-                print(result)
-            elif func == "econfigtable" or func == "ect":
-                Chemistry.ect()
-            elif func == "econfig" or func == "econf":
-                Chemistry.econfig(Chemistry.get_atomic_number(array[1]))
-            elif func == "showtable":
-                os.system('cls' if os.name == 'nt' else 'clear')
-                Chemistry.show_element(array)
-            elif func == "name":
-                result = Chemistry.get_name(array[1])
-                print(result)
-            elif func == "whatis":
-                result = Molecules.whatis(x)
-                print(result)
-            elif func == "clear":
-                os.system('cls' if os.name == 'nt' else 'clear')
-            elif func == "exit" or func == "quit":
-                exit()
-            elif func == "molecule":
-                print("Here are the molecules that are saved in. you can use them in getmass or convert, Case sensitive")
-                for item in Molecules.molecules:
-                    print(item + '\t\t' + Molecules.molecules[item][0] + '\t' + str(Molecules.molecules[item][1]))
-                    print(item, end='')
-                    print(f"{item:>18}{Molecules.molecules[item][0]:>12}{Molecules.molecules[item][1]:>12}")
-                    pass
-            elif func == "help":
-                print("getmass: gives the molecular mass of a molecule. Syntax: 'getmass [element]'.")
-                print("convert: converts an amount of a substance depending. Syntax: 'convert [amount] [unit] [molecule]'.")
-                print("preassure: converts the unit of a specific preassure. Syntax: 'preassure [amount] [initial unit] [final unit]'")
-                print("|available units are: atm, PSI, Pa, kPa, Bar and torr.")
-                print("energy: converts the unit of a specific amount of energy. Syntax: 'energy [amount] [initial unit] [final unit]'")
-                print("atomicnumber: gives the atomic number of an element. Syntax: 'atomicnumber [element]'.")
-                print("econfigtable: prints the electron configuration table.")
-                print("econfig: gives the electron configuration of a specific element. Syntax: 'econfig [element]'.")
-                print("showtable: highlights an element on the periodic table. Syntax: 'showtable [element]'.")
-                print("molecule: Shows the saved in molecules in the Molecule module.")
-                print("calc: Does basic arithmatic calculations. Syntax: 'calc [num1] [operation] [num2]'.")
-                print("name: gives the name of an element, name H will output Hydrogen.")
-                print("clear: clears the terminal.")
-                print("exit: closes the terminal.")
-            elif func == "calc":
-                try:
-                    r = 2
-                    n1 = float(x[0])
-                    n2 = float(x[2])
-                    op = x[1]
-                    if specific == True:
-                        r = 9
-                    if op == "+":
-                        result = n1 + n2
-                    if op == "-":
-                        result = n1 - n2
-                    if op == "*":
-                        result = n1 * n2
-                    if op == "/":
-                        if n2 == 0:
-                            print('Cannot divide by zero!')
-                            return
-                        
-                        result = n1 / n2                    
-                    
-                    print(round(result, r))
-                except:
-                    print("Invalid input!")
-            else:
-                print("Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.")
-        except:
-            print("Invalid Input!")
+        actions = {
+            "getmass": Chemistry.get_molecular_mass,
+            "preassure": Chemistry.preassure_unit_conversion,
+            "pressure": Chemistry.preassure_unit_conversion, #Dublicate
+            "convert": Chemistry.unit_conversion,
+            "energy": Chemistry.energy_conversion,
+            "temp": Chemistry.temp_change,
+            "showtable": Chemistry.show_element,
+            "atomicnumber": Chemistry.get_atomic_number,
+            "econf": Chemistry.econfig,
+            "ect": Chemistry.ect,
+            "name": Chemistry.get_name,
+            "whatis": Molecules.whatis,
+            "calc": calc,
+            "exit": exit,
 
-get_func(argv)
+            } 
+        action = actions.get(func, default)
+        if func == "getmass" or func == "atomicnumber" or func == "name":
+            print(action(array[1])) if len(array) == 2 else print("Invalid Input!")
+            return
+        elif func == "showtable" or func == "econf" or func == "whatis":
+            action(x)
+            return
+        elif func == "ect":
+            action()
+            return
+        print(action(x, specific))
+        
+
+if __name__ == "__main__":  
+    get_func(argv)
+    

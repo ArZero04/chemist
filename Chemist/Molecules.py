@@ -1,33 +1,33 @@
 
 molecules = {
     # Molecules and common names:
-    'Oxygen gas':        ['O2', 31.998],
-    'Nitrogen gas':      ['N2', 28.014],
+    'Oxygen-gas':        ['O2', 31.998],
+    'Nitrogen-gas':      ['N2', 28.014],
     'Oxide':             ['O-2', 15.999],
     'Peroxide':          ['O2-2', 31.998],
     'Superoxide':        ['O2-', 31.998],
     'Water':             ['H2O', 18.015],
     'Salt':              ['NaCl', 58.443],
-    'Sodium chloride':   ['NaCl', 58.443],
-    'Hydrogen carbonate':['HCO3-', 61.016],
+    'Sodium-chloride':   ['NaCl', 58.443],
+    'Hydrogen-carbonate':['HCO3-', 61.016],
     'Bicarbonate':       ['HCO3-', 61.016],
-    'Hydrochloric acid': ['HCl', 36.461],
+    'Hydrochloric-acid': ['HCl', 36.461],
     'Hydroxide':         ['OH-', 17.007],
 
 
 
     # Nobel gassess are monoatmoic:
 
-    'Heluim gas':        ['He', 4.003],
-    'Neon gas':          ['Ne', 20.180],
-    'Argon gas':         ['Ar', 39.948],
+    'Heluim-gas':        ['He', 4.003],
+    'Neon-gas':          ['Ne', 20.180],
+    'Argon-gas':         ['Ar', 39.948],
 
     # Polyatomic Ions:
     'Hydronuim':         ['H3O+', 19.023],
     'Ammonia':           ['NH3', 17.031],
     'Ammonuim':          ['NH4+', 18.039],
-    'Carbon monoxide':   ['CO', 28.01],
-    'Carbon dioxide':    ['CO2', 44],
+    'Carbon-monoxide':   ['CO', 28.01],
+    'Carbon-dioxide':    ['CO2', 44],
     'Carbonate':         ['CO3-2', 60.008],
     'Azide':             ['N3-', 42.021],
     'Nitrate':           ['NO3-', 63.004],
@@ -111,7 +111,12 @@ molecules = {
 
 def whatis(name):
     name = name[0]
-    if name in molecules:
-        return molecules[name][0]
-    else:
-        return 'Not found!'
+    print(molecules[name][0]) if name in molecules else print("Not found!")
+
+
+def molecule():
+    print("Here are the molecules that are saved in. you can use them in getmass or convert, Case sensitive")
+    for item in Molecules.molecules:
+        print(item + '\t\t' + Molecules.molecules[item][0] + '\t' + str(Molecules.molecules[item][1]))
+        print(item, end='')
+        print(f"{item:>18}{Molecules.molecules[item][0]:>12}{Molecules.molecules[item][1]:>12}")
