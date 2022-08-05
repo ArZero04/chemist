@@ -243,6 +243,7 @@ def get_molecular_mass(input, Unit = True):
     for Element in Elements:
         nElement = Element 
         match = re.match(r'([a-z]+)([0-9]+)', Element, re.I)
+
         if match:
             items = match.groups()
             if items[0] in Molecules.molecules:
@@ -250,6 +251,9 @@ def get_molecular_mass(input, Unit = True):
                 nunit += f"({Molecules.molecules[items[0]][0]}){items[1]}"
                 continue
             if items[0] in Periodic_Table:
+                if Periodic_Table[items[0]][2] == 'unknown':
+                    print(f"mass of {items[0]} is unknown") 
+                    continue
                 result += Periodic_Table[items[0]][2] * float(items[1])
                 nunit += nElement
                 
@@ -262,7 +266,9 @@ def get_molecular_mass(input, Unit = True):
                 nunit += f"({Molecules.molecules[Element][0]})"
                 continue
 
-        if Element in Periodic_Table:              
+        if Element in Periodic_Table:         
+                if Periodic_Table[Element][2] == 'unknown':
+                    print(f"mass of {Element} is unknown")     
                 result += Periodic_Table[Element][2]
                 nunit += nElement
                 continue
