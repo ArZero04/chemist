@@ -245,26 +245,26 @@ def get_molecular_mass(input, Unit = True):
             items = match.groups()
             if items[0] in Molecules.molecules:
                 result += Molecules.molecules[items[0]][1] * float(items[1])
-                nunit += f"({Molecules.molecules[items[0]][0]}){items[1]}"
+                nunit += f'({Molecules.molecules[items[0]][0]}){items[1]}'
                 continue
             if items[0] in Periodic_Table:
                 result += Periodic_Table[items[0]][2] * float(items[1])
                 nunit += nElement
                 
                 continue
-            print( Element + " Not in table")
+            print( Element + '' Not in table')
             continue
         
         if Element in Molecules.molecules:
                 result += Molecules.molecules[Element][1]
-                nunit += f"({Molecules.molecules[Element][0]})"
+                nunit += f'({Molecules.molecules[Element][0]})'
                 continue
 
         if Element in Periodic_Table:             
                 result += Periodic_Table[Element][2]
                 nunit += nElement
                 continue
-        print( Element + " Not in table")
+        print( Element + ' Not in table')
         continue
 
 

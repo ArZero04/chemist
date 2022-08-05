@@ -26,7 +26,7 @@ def default():
 
 def calc(x, specific):
     if len(x) < 3:
-        return "Invalid Input!"
+        return 'Invalid Input!'
     r = 2
     n1 = float(x[0])
     n2 = float(x[2])
@@ -101,13 +101,13 @@ def get_func(input):
             }
         action = actions.get(func, default)
         args = arguments.get(func, 0)
-        if func == "calc":
-            print(action(x, specific) if len(x) == args else print("Invalid Input!"))
+        if func == 'calc':
+            print(action(x, specific) if len(x) == args else print('Invalid Input!'))
             return
         if args == 0:
             action()
             return
-        print(action(x) if len(x) == args else print("Invalid Input!"))
+        print(action(x) if len(x) == args else print('Invalid Input!'))
 
 if __name__ == '__main__':  
     get_func(argv)
