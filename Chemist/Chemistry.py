@@ -205,6 +205,8 @@ def get_keys_from_value(d, val):
     return a
 
 def get_name(Element):
+    Element = Element[0]
+    print(Element)
     if Element in Periodic_Table:
         return Periodic_Table[Element][0]
     
@@ -226,13 +228,13 @@ def get_name(Element):
 
 def get_atomic_number(Element):
     try:
-        return Periodic_Table[Element][1]
+        return Periodic_Table[Element[0]][1]
     except:
         return 'Element not found!'
 
 
 def get_molecular_mass(input, Unit = True):
-    Elements = re.findall('[A-Z][^A-Z]*', input)
+    Elements = re.findall('[A-Z][^A-Z]*', input[0])
     result = 0
     unit = ' g/mol '
     nunit = ''
@@ -491,4 +493,5 @@ def econfig(input):
             break
         print(orbital_name[i] + str(remain), end='  ')
         i += 1
-    print()
+
+    return ''

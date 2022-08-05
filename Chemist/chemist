@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-
-
 from sys import argv
 import os
 import Chemistry
@@ -9,12 +7,12 @@ import Molecules
 
 def help():
     print('getmass: gives the molecular mass of a molecule. Syntax: "getmass [element]".')
-    print('convert: converts an amount of a substance depending. Syntax: "convert [amount] [unit] [molecule]".')
+    print('convert: converts an amount of a matter depending on the unit. Syntax: "convert [amount] [unit] [molecule]".')
     print('preassure: converts the unit of a specific preassure. Syntax: "preassure [amount] [initial unit] [final unit]".')
     print('|available units are: "atm, PSI, Pa, kPa, Bar and torr".')
     print('energy: converts the unit of a specific amount of energy. Syntax: "energy [amount] [initial unit] [final unit]".')
     print('atomicnumber: gives the atomic number of an element. Syntax: "atomicnumber [element]".')
-    print('econf: prints the electron configuration table.')
+    print('ect: prints the electron configuration table.')
     print('econfig: gives the electron configuration of a specific element. Syntax: "econfig [element]".')
     print('showtable: highlights an element on the periodic table. Syntax: "showtable [element]"".')
     print('molecule: Shows the saved in molecules in the Molecule module.')
@@ -23,11 +21,12 @@ def help():
     print('clear: clears the terminal.')
     print('exit: closes the terminal.')
 
-#need to get rid of these parameters
-def default(a, b):
+def default():
     print('Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.')
 
 def calc(x, specific):
+    if len(x) < 3:
+        return "Invalid Input!"
     r = 2
     n1 = float(x[0])
     n2 = float(x[2])
@@ -48,7 +47,6 @@ def calc(x, specific):
     return round(result, r)
 
 def get_func(input):
-
         result = 'null'
         specific = False
         array = input
@@ -57,21 +55,18 @@ def get_func(input):
             print('No input recieved!')
             return
         f = 0
-	
         keywords = ['', 'for', 'in', 'to', 'of', ' ']
-        
         for element in array:
             if element in keywords:
                 array.remove(element)
             if '-s' in array:
                 array.remove('-s')
                 specific = True
-                   
         func = array[0] 
         x = array[1:]
-        
         actions = {
             'getmass': Chemistry.get_molecular_mass,
+            'mass': Chemistry.get_molecular_mass, #Dublicate
             'preassure': Chemistry.preassure_unit_conversion,
             'pressure': Chemistry.preassure_unit_conversion, #Dublicate
             'convert': Chemistry.unit_conversion,
@@ -87,21 +82,32 @@ def get_func(input):
             'help': help,
 
             } 
+        
+        arguments = {
+            'getmass': 1,
+            'mass': 1, #Dublicate
+            'preassure': 3,
+            'pressure': 3, #Dublicate
+            'convert': 3,
+            'energy': 3,
+            'temp':   3,
+            'showtable': 1, 
+            'econf': 1,
+            'whatis': 1,
+            'atomicnumber': 1,
+            'name': 1,
+            'calc': 3,
+            
+            }
         action = actions.get(func, default)
-
-        # This part is annoying
-        if func == 'getmass' or func == 'atomicnumber' or func == 'name':
-            print(action(array[1])) if len(array) == 2 else print('Invalid Input!')
+        args = arguments.get(func, 0)
+        if func == "calc":
+            print(action(x, specific) if len(x) == args else print("Invalid Input!"))
             return
-        elif func == 'showtable' or func == 'econf' or func == 'whatis':
-            action(x)
-            return
-        elif func == 'ect' or func == 'help':
+        if args == 0:
             action()
             return
-        print(action(x, specific))
-        ###########################
+        print(action(x) if len(x) == args else print("Invalid Input!"))
 
 if __name__ == '__main__':  
     get_func(argv)
-    

@@ -32,7 +32,7 @@ molecules = {
     'Nitrite':           ['NO2-', 46.005],
     'Nitride':           ['N-3', 42.021],
     'Sulfate':           ['SO4-', 96.062],
-    'Hydrogen Sulfate':  ['HSO4-', 97.07],
+    'Hydrogen-Sulfate':  ['HSO4-', 97.07],
     'Bisulfate':         ['HSO4-2', 97.07],
     'Sulfite':           ['SO3-2', 80.063],
     'Sulfide':           ['S-2', 64.132],
