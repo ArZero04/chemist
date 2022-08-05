@@ -227,10 +227,9 @@ def get_name(Element):
     
 
 def get_atomic_number(Element):
-    try:
+    if Element in Periodic_Table:
         return Periodic_Table[Element[0]][1]
-    except:
-        return 'Element not found!'
+    return 'Element not found!'
 
 def check_molecules(input):
 
@@ -280,34 +279,6 @@ def get_molecular_mass(input, Unit = True):
         return str(result) + ' ' + nunit + unit
     elif Unit == False:
         return [result, nunit]
-
-
-
-
-def splice(input, type = 1):
-    if type == 1:
-        x = input.split(' ')
-        if x[1] == 'moles' or x[1] == 'n':
-            x[1] = 'mol'
-        if x[1] == 'gram' or x[1] == 'grams':
-            x[1] = 'g'
-        try:
-            x.remove('of')
-            return x
-        except:
-            return x
-    elif type == 2:
-        x = input.split(' ')
-        return x
-    elif type == 3:
-        x = input.split(' ')
-        try:
-            x.remove('to')
-        except:
-            pass
-        return x
-
-
 
 def unit_conversion(x, specific = False,  Unit = True):
         molar_ratio = [0, 0]
