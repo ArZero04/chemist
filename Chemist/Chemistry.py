@@ -249,11 +249,12 @@ def get_molecular_mass(input, Unit = True):
                 result += Molecules.molecules[items[0]][1] * float(items[1])
                 nunit += f"({Molecules.molecules[items[0]][0]}){items[1]}"
                 continue
-            if items[0] not in Periodic_Table:
-                print( Element + "Not in table")
+            if items[0] in Periodic_Table:
+                result += Periodic_Table[items[0]][2] * float(items[1])
+                nunit += nElement
+                
                 continue
-            result += Periodic_Table[items[0]][2] * float(items[1])
-            nunit += nElement
+            print( Element + "Not in table")
             continue
         
         if Element in Molecules.molecules:
@@ -261,14 +262,14 @@ def get_molecular_mass(input, Unit = True):
                 nunit += f"({Molecules.molecules[Element][0]})"
                 continue
 
-        if Element not in Periodic_Table:
-                print( Element + "Not in table")
+        if Element in Periodic_Table:              
+                result += Periodic_Table[Element][2]
+                nunit += nElement
                 continue
-        result += Periodic_Table[Element][2]
-        nunit += nElement
+        print( Element + " Not in table")
+        continue
 
-    if result == 0:
-        return 'Error!'
+
     if Unit == True:
         return str(result) + ' ' + nunit + unit
     elif Unit == False:
@@ -303,7 +304,7 @@ def splice(input, type = 1):
 
 
 def unit_conversion(x, specific = False,  Unit = True):
-
+        molar_ratio = [0, 0]
         amount = float(x[0])
         molecule = x[2]
         r = 3
