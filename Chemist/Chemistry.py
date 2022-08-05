@@ -232,28 +232,39 @@ def get_atomic_number(Element):
     except:
         return 'Element not found!'
 
+def check_molecules(input):
 
+    pass
 def get_molecular_mass(input, Unit = True):
     Elements = re.findall('[A-Z][^A-Z]*', input[0])
     result = 0
     unit = ' g/mol '
     nunit = ''
-    i = -1
     for Element in Elements:
-        nElement = Element
-        i += 1
-        if Element.isalpha():
-                
-            if Element in Molecules.molecules:
-                nElement = Molecules.molecules[Element][0]
+        nElement = Element 
+        match = re.match(r'([a-z]+)([0-9]+)', Element, re.I)
+        if match:
+            items = match.groups()
+            if items[0] in Molecules.molecules:
+                result += Molecules.molecules[items[0]][1] * float(items[1])
+                nunit += f"({Molecules.molecules[items[0]][0]}){items[1]}"
+                continue
+            if items[0] not in Periodic_Table:
+                print( Element + "Not in table")
+                continue
+            result += Periodic_Table[items[0]][2] * float(items[1])
+            nunit += nElement
+            continue
+        
+        if Element in Molecules.molecules:
                 result += Molecules.molecules[Element][1]
-            else:
-                result += Periodic_Table[Element][2] 
-        else:
-            match = re.match(r'([a-z]+)([0-9]+)', Element, re.I)
-            if match:
-                items = match.groups()
-            result += Periodic_Table[items[0]][2] * float(items[1]) 
+                nunit += f"({Molecules.molecules[Element][0]})"
+                continue
+
+        if Element not in Periodic_Table:
+                print( Element + "Not in table")
+                continue
+        result += Periodic_Table[Element][2]
         nunit += nElement
 
     if result == 0:
@@ -292,7 +303,7 @@ def splice(input, type = 1):
 
 
 def unit_conversion(x, specific = False,  Unit = True):
-    try: #fix this
+
         amount = float(x[0])
         molecule = x[2]
         r = 3
@@ -300,7 +311,7 @@ def unit_conversion(x, specific = False,  Unit = True):
             r = 7
         mol = ['n', 'mol', 'moles', 'mols']
         g = ['g', 'gram', 'grams']
-        molar_ratio = get_molecular_mass(molecule, False)
+        molar_ratio = get_molecular_mass(x[2:], False)
         if x[1] in mol:
             out = round(amount * molar_ratio[0], r)
             a = 'g '
@@ -310,8 +321,7 @@ def unit_conversion(x, specific = False,  Unit = True):
         if Unit == True:
             return str(out) + ' ' + a + molar_ratio[1]
         return out
-    except:
-        return 'Error'
+
 
 
 

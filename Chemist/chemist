@@ -107,7 +107,7 @@ def get_func(input):
         if args == 0:
             action()
             return
-        print(action(x) if len(x) == args else print("Invalid Input!"))
+        print(action(x) if len(x) == args else print("Invalid Output!"))
 
 if __name__ == '__main__':  
     get_func(argv)
