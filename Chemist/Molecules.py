@@ -19,6 +19,9 @@ molecules = {
     'Heluim-gas':        ['He', 4.003],
     'Neon-gas':          ['Ne', 20.180],
     'Argon-gas':         ['Ar', 39.948],
+    'Krypton-gas':       ['Kr', 83.798],
+    'Xenon-gas':         ['Xe', 131.29],
+    'Radon-gas':         ['Rn', 220],
 
     # Polyatomic Ions:
     'Hydronuim':         ['H3O+', 19.023],
@@ -109,7 +112,7 @@ molecules = {
 
 def whatis(name):
     name = name[0]
-    print(molecules[name][0]) if name in molecules else print('Not found!')
+    return (molecules[name][0]) if name in molecules else print('Not found!')
 
 
 def molecule():

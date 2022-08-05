@@ -50,7 +50,7 @@ Periodic_Table = {
     'As': ['Arsenic', 33, 74.922, 'Non Metal'],
     'Se': ['Selenium', 34, 78.09, 'Non Metal'],
     'Br': ['Bromine', 35, 79.904, 'Halogen'],
-    'Kr': ['Krypton', 36, 84.80, 'Noble Gas'],
+    'Kr': ['Krypton', 36, 83.798, 'Noble Gas'],
     'Rb': ['Rubidium', 37, 84.468, 'Alkali Metal'],
     'Sr': ['Strontium', 38, 87.62, 'Alkaline Earth Metal'],
     'Y': ['Yttrium', 39, 88.906, 'Transition Metal'],
@@ -127,12 +127,12 @@ Periodic_Table = {
     'Ds': ['Darmstadium', 110, 269, 'Transition Metal'],
     'Rg': ['Roentgenium', 111, 272, 'Transition Metal'],
     'Cn': ['Copernicium', 112, 277, 'Transition Metal'],
-    'Uut': ['Ununtrium', 113, 'unknown', 'Basic Metal'],
+    'Nh': ['Nihionium', 113, 284, 'Basic Metal'],
     'Fl': ['Flerovium', 114, 289, 'Basic Metal'],
-    'Uup': ['Ununopentium', 115, 'unknown', 'Basic Metal'],
-    'Lv': ['Livermorium', 116, 298, 'Basic Metal'],
-    'Uus': ['Ununseptium', 117, 'unknown', 'Halogen'],
-    'Uuo': ['Ununoctium', 118, 'unknown', 'Noble Gas'],
+    'Mc': ['Moscovium', 115, 288, 'Basic Metal'],
+    'Lv': ['Livermorium', 116, 293, 'Basic Metal'],
+    'Ts': ['Tennessine', 117, 294, 'Halogen'],
+    'Og': ['Oganesson', 118, 294, 'Noble Gas'],
 }
 
 Periodic_Table_Visual = [
@@ -205,7 +205,6 @@ def get_keys_from_value(d, val):
 
 def get_name(Element):
     Element = Element[0]
-    print(Element)
     if Element in Periodic_Table:
         return Periodic_Table[Element][0]
     
@@ -249,9 +248,6 @@ def get_molecular_mass(input, Unit = True):
                 nunit += f"({Molecules.molecules[items[0]][0]}){items[1]}"
                 continue
             if items[0] in Periodic_Table:
-                if Periodic_Table[items[0]][2] == 'unknown':
-                    print(f"mass of {items[0]} is unknown") 
-                    continue
                 result += Periodic_Table[items[0]][2] * float(items[1])
                 nunit += nElement
                 
@@ -264,9 +260,7 @@ def get_molecular_mass(input, Unit = True):
                 nunit += f"({Molecules.molecules[Element][0]})"
                 continue
 
-        if Element in Periodic_Table:         
-                if Periodic_Table[Element][2] == 'unknown':
-                    print(f"mass of {Element} is unknown")     
+        if Element in Periodic_Table:             
                 result += Periodic_Table[Element][2]
                 nunit += nElement
                 continue
