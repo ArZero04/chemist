@@ -190,10 +190,9 @@ def show_element(input):
         
 
 def get_type(Element):
-    try:
+    if Element in Periodic_Table:
         return Periodic_Table[Element][3]
-    except:
-        return 
+    return 
 
 def get_keys_from_value(d, val):
     a = []
@@ -300,10 +299,6 @@ def unit_conversion(x, specific = False,  Unit = True):
             return str(out) + ' ' + a + molar_ratio[1]
         return out
 
-
-
-
-
 def to_atm(input, show_unit = True):
     amount = input[0]
     unit = input[1].lower()
@@ -331,13 +326,13 @@ def to_atm(input, show_unit = True):
     return result
 
 def preassure_unit_conversion(input, specific = False,show_unit = True):
-    try: #fix this
         r = 2
         if specific == True:
             r = 7
         amount = float(input[0])
-        unit = input[1]
+        unit = input[1].lower()
         unit2 = input[2].lower()
+        
         atm = float(to_atm([amount, unit], False))
         result = 'null'
         if unit2 == 'torr':
@@ -358,16 +353,16 @@ def preassure_unit_conversion(input, specific = False,show_unit = True):
         elif unit2 == 'bar':
             result = atm * Bar
             unit2 = 'Bar'
-        else:
+        elif unit2 == 'atm':
             result = atm
-            unit2 = ' atm'    
+        else:
+            return 'Invalid unit!'  
         if show_unit == True:
             result = round(result, r)
             out = str(result) + ' ' + unit2
             return out
         return result
-    except:
-        return 'Error'
+
 
 def energy_conversion(input, specific = False, show_unit = True):
     amount = float(input[0])
@@ -438,10 +433,12 @@ def to_kelvin(input, target):
     return result
 
 def temp_change(input, specific = False, show_element = True):
-    try: #fix this
         amount = input[0]
-        unit = input[1]
+        valid_units = ['C', 'K', 'F']
+        unit = input[1].upper()
         unit2 = input[2].upper()
+        if unit not in valid_units or unit2 not in valid_units:
+            return 'Invalid units!'
         amount = float(amount)
         namount = to_kelvin(amount,  unit)
         unit = unit.upper()
@@ -457,8 +454,7 @@ def temp_change(input, specific = False, show_element = True):
                 return str(round(result, 7)) + unit2
             return str(round(result, 2)) + unit2
         return result
-    except:
-        return 'Error!'
+
 
 
 
