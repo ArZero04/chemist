@@ -65,7 +65,7 @@ This command converts temperature. to either Celcius, Fahrenheit, and Kelvin.
 **Example:** chemist temp 10 C K
 
 
-**Available units: C, K, F**
+**Available units: C, K, F.**
 
 
 **atomicnumber:**
