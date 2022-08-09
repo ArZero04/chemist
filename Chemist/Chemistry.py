@@ -252,7 +252,7 @@ def get_molecular_mass(input, Unit = True):
                 nunit += nElement
                 
                 continue
-            print( Element + '' Not in table')
+            print( Element + ' Not in table')
             continue
         
         if Element in Molecules.molecules:
