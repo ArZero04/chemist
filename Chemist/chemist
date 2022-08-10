@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 from sys import argv
 import os
-import Chemistry
-import Molecules
+import chemistry
+import molecules
 
 
 def help():
@@ -65,19 +65,19 @@ def get_func(input):
         func = array[0] 
         x = array[1:]
         actions = {
-            'getmass': Chemistry.get_molecular_mass,
-            'mass': Chemistry.get_molecular_mass, #Dublicate
-            'preassure': Chemistry.preassure_unit_conversion,
-            'pressure': Chemistry.preassure_unit_conversion, #Dublicate
-            'convert': Chemistry.unit_conversion,
-            'energy': Chemistry.energy_conversion,
-            'temp': Chemistry.temp_change,
-            'showtable': Chemistry.show_element,
-            'atomicnumber': Chemistry.get_atomic_number,
-            'econf': Chemistry.econfig,
-            'ect': Chemistry.ect,
-            'name': Chemistry.get_name,
-            'whatis': Molecules.whatis,
+            'getmass': chemistry.get_molecular_mass,
+            'mass': chemistry.get_molecular_mass, #Dublicate
+            'preassure': chemistry.preassure_unit_conversion,
+            'pressure': chemistry.preassure_unit_conversion, #Dublicate
+            'convert': chemistry.unit_conversion,
+            'energy': chemistry.energy_conversion,
+            'temp': chemistry.temp_change,
+            'showtable': chemistry.show_element,
+            'atomicnumber': chemistry.get_atomic_number,
+            'econf': chemistry.econfig,
+            'ect': chemistry.ect,
+            'name': chemistry.get_name,
+            'whatis': molecules.whatis,
             'calc': calc,
             'help': help,
 
