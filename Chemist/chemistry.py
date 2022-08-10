@@ -141,8 +141,8 @@ Periodic_Table_Visual = [
     ['Na', 'Mg', '', '', '', '', '', '', '', '', '', '', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar'],
     ['K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr'],
     ['Rb', 'Sr', 'Y', 'Ze', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe'],
-    ['Cs', 'Ba', '[]', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At ', 'Rn '],
-    ['Fr', 'Ra', '[]', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Uut', 'Fl', 'Uup', 'Lv', 'Uus','Uuo'],
+    ['Cs', 'Ba', '||', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At ', 'Rn '],
+    ['Fr', 'Ra', '\\/', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts','Og'],
     ['', '--->>','La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu'],
     ['', '--->>','Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr']
 ]
@@ -150,44 +150,31 @@ Periodic_Table_Visual = [
 
 def show_element(input): 
     os.system('cls' if os.name == 'nt' else 'clear') 
-    if len(input) == 1:
-        input = input[0]
+    color = 'green'
+    if len(input) == 0:
+        input = '.'
+        no_input = False
     else:
-        input = ''
+        input = input[0]
+        no_input = True
     x = input
-    if x in Periodic_Table:
-        for element in Periodic_Table_Visual:
-                
-                for i in element:
-                    while len(i) < 3:
-                        i += ' '
-                    while len(x) < 3:
-                        x += ' '
-                    if i == x:
-                        print(colored(i, 'white', 'on_red'), end=' ')
-                    else:
-                        print(colored(i, 'green'), end=' ')
-                print()
+    if x not in Periodic_Table and x != '.':
+        color = 'red'
+    for element in Periodic_Table_Visual:     
+        for i in element:
+            if i == x:
+                print(colored(f'{i:<4}', 'white', 'on_red'), end='')
+            else:
+                print(colored(f'{i:<4}', color), end = '')
+        print()
+    if input in Periodic_Table:
         print('name:                                    ' + Periodic_Table[input][0])
         print('atomic number:                           ' + str(Periodic_Table[input][1]))
         print('molecular weight:                        ' + str(Periodic_Table[input][2]))
         print('type:                                    ' + Periodic_Table[input][3])
-    elif x == '':
-        for element in Periodic_Table_Visual:
-                for i in element:
-                    while len(i) < 3:
-                        i += ' '
-                    print(colored(i, 'green'), end=' ')
-                print()
-    else:
-        for element in Periodic_Table_Visual:
-                for i in element:    
-                    while len(i) < 3:
-                            i += ' '
-                    print(colored(i, 'red'), end=' ')
-                print()
-        print(colored('not found!', 'red'))
-        
+        return
+    if no_input:
+        print(colored("Not found!", color))
 
 def get_type(Element):
     if Element in Periodic_Table:

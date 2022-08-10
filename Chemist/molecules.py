@@ -117,7 +117,5 @@ def whatis(name):
 
 def molecule():
     print('Here are the molecules that are saved in. you can use them in getmass or convert, Case sensitive')
-    for item in Molecules.molecules:
-        print(item + '\t\t' + Molecules.molecules[item][0] + '\t' + str(Molecules.molecules[item][1]))
-        print(item, end='')
-        print(f'{item:>18}{Molecules.molecules[item][0]:>12}{Molecules.molecules[item][1]:>12}')
+    for item in molecules:
+        print(f'{item:<20}{molecules[item][0]:<12}{molecules[item][1]:<12}')
