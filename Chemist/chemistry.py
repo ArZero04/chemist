@@ -14,7 +14,7 @@ Bar = 1.01325
 orbital_name = ['1s', '2s', '2p', '3s', '3p', '3d', '4s', '4p', '4d', '4f', '5s', '5p', '5d', '5f', '6s', '6p', '6d', '7s', '7p', '8s']
 orbital_num = [2, 2, 6, 2, 6, 10, 2, 6, 10, 16, 2, 6, 10, 16, 2, 6, 10, 2, 6, 2]
 
-Periodic_Table = {
+periodic_table = {
     'H': ['Hydrogen', 1, 1.008, 'Non Metal'],
     'He': ['Helium', 2, 4.003, 'Noble Gas'],
     'Li': ['Lithium', 3, 6.941, 'Alkali Metal'],
@@ -135,7 +135,7 @@ Periodic_Table = {
     'Og': ['Oganesson', 118, 294, 'Noble Gas'],
 }
 
-Periodic_Table_Visual = [
+periodic_table_visual = [
     ['H', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'He'],
     ['Li', 'Be', '', '', '', '', '', '', '', '', '', '', 'B', 'C', 'N', 'O', 'F', 'Ne'],
     ['Na', 'Mg', '', '', '', '', '', '', '', '', '', '', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar'],
@@ -158,27 +158,27 @@ def show_element(input):
         input = input[0]
         no_input = True
     x = input
-    if x not in Periodic_Table and x != '.':
+    if x not in periodic_table and x != '.':
         color = 'red'
-    for element in Periodic_Table_Visual:     
+    for element in periodic_table_visual:
         for i in element:
             if i == x:
                 print(colored(f'{i:<4}', 'white', 'on_red'), end='')
             else:
                 print(colored(f'{i:<4}', color), end = '')
         print()
-    if input in Periodic_Table:
-        print('name:                                    ' + Periodic_Table[input][0])
-        print('atomic number:                           ' + str(Periodic_Table[input][1]))
-        print('molecular weight:                        ' + str(Periodic_Table[input][2]))
-        print('type:                                    ' + Periodic_Table[input][3])
+    if input in periodic_table:
+        print('name:                                    ' + periodic_table[input][0])
+        print('atomic number:                           ' + str(periodic_table[input][1]))
+        print('molecular weight:                        ' + str(periodic_table[input][2]))
+        print('type:                                    ' + periodic_table[input][3])
         return
     if no_input:
         print(colored("Not found!", color))
 
-def get_type(Element):
-    if Element in Periodic_Table:
-        return Periodic_Table[Element][3]
+def get_type(element):
+    if element in periodic_table:
+        return periodic_table[element][3]
     return 
 
 def get_keys_from_value(d, val):
@@ -190,59 +190,55 @@ def get_keys_from_value(d, val):
         return a[0]
     return a
 
-def get_name(Element):
-    Element = Element[0]
-    if Element in Periodic_Table:
-        return Periodic_Table[Element][0]
+def get_name(element):
+    element = element[0]
+    if element in periodic_table:
+        return periodic_table[element][0]
     
-    d = Periodic_Table
-    keys = get_keys_from_value(d, Element)
+    d = periodic_table
+    keys = get_keys_from_value(d, element)
     if not keys:
         pass
     else:
         return keys
-    # If the program doesn't find the Element in the periodic table, it looks for 
+    # If the program doesn't find the element in the periodic table, it looks for 
     # Molecule names. 
     d = molecules.molecules
-    keys = get_keys_from_value(d,Element)
+    keys = get_keys_from_value(d,element)
     if not keys:
-        return 'Element not found!'
-    return keys
-    
-    
+        return 'element not found!'
+    return keys 
 
-def get_atomic_number(Element):
-    if Element in Periodic_Table:
-        return Periodic_Table[Element[0]][1]
-    return 'Element not found!'
+def get_atomic_number(element):
+    if element[0] in periodic_table:
+        return periodic_table[element[0]][1]
+    return 'element not found!'
 
-def check_molecules(input):
-
-    pass
-def get_molecular_mass(input, Unit = True):
-    Elements = re.findall('[A-Z][^A-Z]*', input[0])
+def get_molecular_mass(input, show_unit = True):
+    elements = re.findall('[A-Z][^A-Z]*', input[0])
     result = 0
     unit = ' g/mol '
     nunit = ''
-    for Element in Elements:
-        nElement = Element 
-        find = re.split(r'(\d+)', Element)[0: 2]
-        Element = find[0]
+    for element in elements:
+        n_element = '' 
+        find = re.split(r'(\d+)', element)[0: 2]
+        element = find[0]
+        for u in find:
+            n_element += u
         num = int(find[1]) if len(find) == 2 else 1
-        if Element in molecules.molecules:
-                result += molecules.molecules[Element][1] * num
-                nunit += f'({molecules.molecules[Element][0]}){num}'
+        if element in molecules.molecules:
+                result += molecules.molecules[element][1] * num
+                nunit += f'({molecules.molecules[element][0]}){num}'
                 continue
-        if Element in Periodic_Table:
-                result += Periodic_Table[Element][2] * num
-                nunit += nElement
+        if element in periodic_table:
+                result += periodic_table[element][2] * num
+                nunit += n_element
                 continue
-        print( Element + ' Not in table')
-        continue
+        print( element + ' Not in table')
 
-    if Unit == True:
+    if show_unit == True:
         return str(result) + ' ' + nunit + unit
-    elif Unit == False:
+    elif show_unit == False:
         return [result, nunit]
 
 def unit_conversion(x, specific = False,  Unit = True):
@@ -433,7 +429,7 @@ def ect():
 
 def econfig(input):
     i = 0
-    element = get_atomic_number(input[0])
+    element = get_atomic_number(input)
     for e in orbital_num:
         element -= e
         remain = e
