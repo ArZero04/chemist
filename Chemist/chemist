@@ -24,13 +24,12 @@ def help():
 def default():
     print('Invalid command! try: getmass, convert, preassure, energy, calc, atomicnumber, molecule, showtable, name, clear, exit.')
 
-def calc(x, specific):
-    if len(x) < 3:
-        return 'Invalid Input!'
+def calc(input, specific):
     r = 2
-    n1 = float(x[0])
-    n2 = float(x[2])
-    op = x[1]
+    print(input)
+    n1 = float(input[1])
+    n2 = float(input[3])
+    op = input[2]
     if specific == True:
         r = 9
     if op == '+':
@@ -49,21 +48,21 @@ def calc(x, specific):
 def get_func(input):
         result = 'null'
         specific = False
-        array = input
-        array.pop(0)
-        if len(array) == 0:
+        
+
+        keywords = ['', 'for', 'in', 'to', 'of', ' ']
+        for element in input:
+            if element in keywords:
+                input.remove(element)
+            if '-s' in input:
+                input.remove('-s')
+                specific = True
+
+        if len(input) == 1:
             print('No input recieved!')
             return
-        f = 0
-        keywords = ['', 'for', 'in', 'to', 'of', ' ']
-        for element in array:
-            if element in keywords:
-                array.remove(element)
-            if '-s' in array:
-                array.remove('-s')
-                specific = True
-        func = array[0] 
-        x = array[1:]
+        func = input[1]
+        x = input[1:]
         actions = {
             'getmass': chemistry.get_molecular_mass,
             'mass': chemistry.get_molecular_mass, #Dublicate
@@ -81,8 +80,7 @@ def get_func(input):
             'molecule': molecules.molecule,
             'calc': calc,
             'help': help,
-
-            } 
+            }
         
         arguments = {
             'getmass': 1,
@@ -98,20 +96,26 @@ def get_func(input):
             'atomicnumber': 1,
             'name': 1,
             'calc': 3,
-            
             }
-        action = actions.get(func, default)
-        args = arguments.get(func, 0)
+
+        action = actions.get(input[1], default)
+        args = arguments.get(input[1], 0)
         if func == 'calc':
-            print(action(x, specific) if len(x) == args else print('Invalid Input!'))
+            print(action(x, specific) if len(input[2:]) == args else print('Invalid arguments!'))
             return
-        elif func == 'showtable':
-            action(x)
+        elif func == 'showtable' or func == 'ect' or func == 'econf':
+            action(input[2]) if len(input) == 3 else action()
+            return
+        elif args == 1:
+            if func == 'mass' or func == 'getmass':
+                print(action(*input[2:], True))
+            print(action(*input[2:])) if len(input[2:]) == 1 else print('Invalid arguments!')
             return
         if args == 0:
             action()
             return
-        print(action(x) if len(x) == args else print('Invalid Input!'))
+        print(input)
+        print(action(*input[2:], specific, True)) if len(input[2:]) == args else print('Invalid arguments!')
 
 if __name__ == '__main__':  
     get_func(argv)

@@ -4,12 +4,31 @@ from colorama import init
 from termcolor import colored
 import molecules
 
+# PREASSURE UNITS
+torr_per_atm = 760.0021
+mmHG_per_atm = 760.0021
+PSI_per_atm = 14.6959
+Pa_per_atm = 101325
+Bar_per_atm = 1.01325
 
-torr = 760.0021
-mmHG = 760.0021
-PSI = 14.6959
-Pa = 101325
-Bar = 1.01325
+atm = 'atm'
+torr = 'torr'
+mmHg = 'mmhg'
+PSI = 'psi'
+Pa = 'pa'
+KPa = 'kpa'
+Bar = 'bar'
+
+# ENERGY UNITS
+joule = 'joule'
+kilo_joule = 'joule'
+calorie = 'cal'
+kilo_calorie = 'kcal'
+
+# TEMPERATURE UNITS
+kelvin = 'k'
+celsius = 'c'
+fahrenheit = 'f'
 
 orbital_name = ['1s', '2s', '2p', '3s', '3p', '3d', '4s', '4p', '4d', '4f', '5s', '5p', '5d', '5f', '6s', '6p', '6d', '7s', '7p', '8s']
 orbital_num = [2, 2, 6, 2, 6, 10, 2, 6, 10, 16, 2, 6, 10, 16, 2, 6, 10, 2, 6, 2]
@@ -147,15 +166,14 @@ periodic_table_visual = [
     ['', '--->>','Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr']
 ]
 
-
-def show_element(input): 
+def show_element(input = ''): 
     os.system('cls' if os.name == 'nt' else 'clear') 
     color = 'green'
     if len(input) == 0:
         input = '.'
         no_input = False
     else:
-        input = input[0]
+        input = input
         no_input = True
     x = input
     if x not in periodic_table and x != '.':
@@ -174,12 +192,12 @@ def show_element(input):
         print('type:                                    ' + periodic_table[input][3])
         return
     if no_input:
-        print(colored("Not found!", color))
+        print(colored('Not found!', color))
 
 def get_type(element):
     if element in periodic_table:
         return periodic_table[element][3]
-    return 
+    return 'Not found!'
 
 def get_keys_from_value(d, val):
     a = []
@@ -191,31 +209,29 @@ def get_keys_from_value(d, val):
     return a
 
 def get_name(element):
-    element = element[0]
     if element in periodic_table:
         return periodic_table[element][0]
-    
-    d = periodic_table
-    keys = get_keys_from_value(d, element)
+    keys = get_keys_from_value(periodic_table, element)
     if not keys:
         pass
     else:
         return keys
     # If the program doesn't find the element in the periodic table, it looks for 
-    # Molecule names. 
-    d = molecules.molecules
-    keys = get_keys_from_value(d,element)
+    # Molecule names.
+    if element in molecules.molecules:
+        return molecules.molecules[element][0]
+    keys = get_keys_from_value(molecules.molecules, element)
     if not keys:
-        return 'element not found!'
+        return 'Element not found!'
     return keys 
 
 def get_atomic_number(element):
-    if element[0] in periodic_table:
-        return periodic_table[element[0]][1]
-    return 'element not found!'
+    if element in periodic_table:
+        return periodic_table[element][1]
+    return 'Element not found!'
 
-def get_molecular_mass(input, show_unit = True):
-    elements = re.findall('[A-Z][^A-Z]*', input[0])
+def get_molecular_mass(amount, show_unit = False):
+    elements = re.findall('[A-Z][^A-Z]*', amount)
     result = 0
     unit = ' g/mol '
     nunit = ''
@@ -239,154 +255,151 @@ def get_molecular_mass(input, show_unit = True):
     if show_unit == True:
         return str(result) + ' ' + nunit + unit
     elif show_unit == False:
-        return [result, nunit]
+        return result
 
-def unit_conversion(x, specific = False,  Unit = True):
-        molar_ratio = [0, 0]
-        amount = float(x[0])
-        molecule = x[2]
+def unit_conversion(amount, unit, molecule, specific = True,  show_unit = True):
+        molar_ratio = 0
+        amount = float(amount)
         r = 3
         if specific == True:
-            r = 7
+            r = 15
         mol = ['n', 'mol', 'moles', 'mols']
         g = ['g', 'gram', 'grams']
-        molar_ratio = get_molecular_mass(x[2:], False)
-        if x[1] in mol:
-            out = round(amount * molar_ratio[0], r)
+        print(unit, molecule)
+        molar_ratio = get_molecular_mass(molecule)
+        print(molar_ratio)
+        if unit in mol:
+            result = round(amount * molar_ratio, r)
             a = 'g '
-        elif x[1] in g:
-            out = round(amount / molar_ratio[0], r)
+        elif unit in g:
+            result = round(amount / molar_ratio, r)
             a = 'mol '
-        if Unit == True:
-            return str(out) + ' ' + a + molar_ratio[1]
-        return out
+        else:
+            return 'Unit can only be in grams or moles!'
+        if show_unit == True:
+            return str(result) + ' ' + a + unit
+        return result
 
-def to_atm(input, show_unit = True):
+def to_atm(input):
     amount = input[0]
     unit = input[1].lower()
     result = 'null'
-    if unit == 'torr':
-        result = amount / torr
-    elif unit == 'mmhg':
+    if unit == torr:
+        result = amount / torr_per_atm
+    elif unit == mmHg:
         result = amount / mmHG
-    elif unit == 'psi':
-        result = amount / PSI
-    elif unit == 'pa':
-        result = amount / Pa
-    elif unit == 'kpa':
-        result = amount / Pa / 1000
-    elif unit == 'bar':
-        result = amount / Bar
-    elif unit == 'atm':
+    elif unit == PSI:
+        result = amount / PSI_per_atm
+    elif unit == Pa:
+        result = amount / Pa_per_atm
+    elif unit == KPa:
+        result = amount / Pa_per_atm / 1000
+    elif unit == Bar:
+        result = amount / Bar_per_atm
+    elif unit == atm:
         result = amount
     unit = ' atm'
-
-    if show_unit == True:
-        result = round(result, 5)
-        out = str(result) + unit
-        return out
     return result
 
-def preassure_unit_conversion(input, specific = False,show_unit = True):
+def preassure_unit_conversion(amount, unit, unit_to, specific = True,show_unit = False):
         r = 2
         if specific == True:
-            r = 7
-        amount = float(input[0])
-        unit = input[1].lower()
-        unit2 = input[2].lower()
-        
-        atm = float(to_atm([amount, unit], False))
+            r = 15
+        amount = float(amount)
+        unit = unit.lower()
+        unit_to = unit_to.lower()
+        atm_amount = float(to_atm([amount, unit]))
         result = 'null'
-        if unit2 == 'torr':
-            result = atm * torr
-            unit2 = ' torr'
-        elif unit2 == 'mmhg':
-            result = atm * mmHG
-            unit2 = ' mmHg'
-        elif unit2 == 'pa':
-            result = atm / Pa
-            unit2 = ' Pa'
-        elif unit2 == 'kpa':
-            result = atm * Pa / 1000
-            unit2 = ' kPa'
-        elif unit2 == 'psi':
-            result = atm * PSI
-            unit2 = ' PSI'
-        elif unit2 == 'bar':
-            result = atm * Bar
-            unit2 = 'Bar'
-        elif unit2 == 'atm':
-            result = atm
+        if unit_to == torr:
+            result = atm_amount * torr_per_atm
+            unit_to = ' torr'
+        elif unit_to == mmHg:
+            result = atm_amount * mmHg_per_atm
+            unit_to = ' mmHg'
+        elif unit_to == Pa:
+            result = atm_amount / Pa_per_atm
+            unit_to = ' Pa'
+        elif unit_to == KPa:
+            result = atm_amount * Pa_per_atm / 1000
+            unit_to = ' kPa'
+        elif unit_to == PSI:
+            result = atm_amount * PSI_per_atm
+            unit_to = ' PSI'
+        elif unit_to == Bar:
+            result = atm_amount * Bar_per_atm
+            unit_to = 'Bar'
+        elif unit_to == atm:
+            result = atm_amount
         else:
             return 'Invalid unit!'  
         if show_unit == True:
             result = round(result, r)
-            out = str(result) + ' ' + unit2
+            out = str(result) + ' ' + unit_to
             return out
         return result
 
-
-def energy_conversion(input, specific = False, show_unit = True):
-    amount = float(input[0])
-    unit = input[1].lower()
-    unit2 = input[2].lower()
-    if unit == 'cal':
-        if unit2 == 'kcal':
+def energy_conversion(amount, unit, unit_to, sp=True, show_unit=False):
+    amount = float(amount)
+    unit = unit.lower()
+    unit_to = unit_to.lower()
+    r = 2
+    if sp:
+        r = 15
+    if unit == calorie:
+        if unit_to == kilo_calorie:
             result = amount / 1000
             unit3='KCal'
-        elif unit2 == 'joule'.casefold():
+        elif unit_to == joule:
             result = amount * 4.184
             unit3='Joule'
-        elif unit2 == 'kjoule'.casefold():
+        elif unit_to == kilo_joule:
             result = amount * 0.004184
             unit3='KJoule'
         else:
             return str(amount) + ' Cal'
-    elif unit == 'kcal'.casefold():
-        if unit2 == 'cal'.casefold():
+    elif unit == kilo_calorie:
+        if unit_to == calorie:
             result = amount * 1000
             unit3='Cal'
-        elif unit2 == 'joule'.casefold():
+        elif unit_to == joule:
             result = amount * 4184
             unit3='Joule'
-        elif unit2 == 'kjoule'.casefold():
+        elif unit_to == kilo_joule:
             result = amount * 4.184
             unit3='KJoule'
         else:
             return str(amount) + ' Cal'
-    elif unit == 'joule'.casefold(): 
-        if unit2 == 'kjoule':
+    elif unit == joule: 
+        if unit_to == kilo_joule:
             result = amount / 1000
             unit3='KJoule'
-        elif unit2 == 'kcal':
+        elif unit_to == kilo_calorie:
             result = amount / 4184
             unit3='KCal'
-        elif unit2 == 'cal':
+        elif unit_to == calorie:
             result = amount / 4.184
             unit3='Cal'
         else:
             return str(amount) + ' Joule'
-    elif unit == 'kjoule':
-        if unit2 == 'joule':
+    elif unit == kilo_joule:
+        if unit_to == joule:
             result = amount * 1000
             unit3='Joule'
-        elif unit2 == 'kcal':
+        elif unit_to == kilo_calorie:
             result = amount / 4184
             unit3='KCal'
-        elif unit2 == 'cal':
+        elif unit_to == calorie:
             result = amount / 0.04184
             unit3='Cal'
         else:
             return str(amount) + ' KJoule'
-    if show_unit == True:
-        if specific == True:
-            return str(round(result, 7)) + ' ' + unit3
-        return str(result) + ' ' + unit3
+    if show_unit:
+        return str(round(result, r)) + ' ' + unit3
     return result
 
-def to_kelvin(input, target):
-    amount = input
-    unit = target.upper()
+
+def to_kelvin(amount, unit):
+    unit = unit.upper()
     result = amount
     if unit == 'C':
         result = amount + 273.15
@@ -394,43 +407,35 @@ def to_kelvin(input, target):
         result = (amount - 32) *  5/9 + (273.15)
     return result
 
-def temp_change(input, specific = False, show_element = True):
-        amount = input[0]
-        valid_units = ['C', 'K', 'F']
-        unit = input[1].upper()
-        unit2 = input[2].upper()
-        if unit not in valid_units or unit2 not in valid_units:
-            return 'Invalid units!'
-        amount = float(amount)
-        namount = to_kelvin(amount,  unit)
-        unit = unit.upper()
-        result = namount
-        if unit2 == 'C': 
-            result = namount - 273.15
-        elif unit2 == 'F':
-            result = ((namount - 273.15) * (9/5)) + 32
-        else:
-            unit2 = 'K'
-        if show_element == True:
-            if specific == True:
-                return str(round(result, 7)) + unit2
-            return str(round(result, 2)) + unit2
-        return result
-
-
-
+def temp_change(amount, unit_from, unit_to, sp = True, show_unit=False):
+    amount = float(amount)
+    r = 2
+    unit_from = unit_from.upper()
+    unit_to = unit_to.upper()
+    valid_units = ['C', 'K', 'F']
+    namount = to_kelvin(amount,  unit_from)
+    result = namount
+    if unit_to == 'C': 
+        result = namount - 273.15
+    elif unit_to == 'F':
+        result = ((namount - 273.15) * (9/5)) + 32
+    else:
+        unit_to = 'K'
+    if show_unit:
+        return str(round(result, r)) + unit_to
+    return result
 
 def ect():
-    i = 0
-    for e in orbital_num:
+    for i, e in enumerate(orbital_num):
         print(orbital_name[i] + str(e), end='  ')
-        i += 1
     print()
 
-def econfig(input):
-    i = 0
-    element = get_atomic_number(input)
-    for e in orbital_num:
+def econfig(element):
+    if element not in periodic_table:
+        print('Element not found!')
+        return
+    element = get_atomic_number(element)
+    for i, e in enumerate(orbital_num):
         element -= e
         remain = e
         if element <= 0:
@@ -438,6 +443,5 @@ def econfig(input):
             print(orbital_name[i] + str(remain), end='  ')
             break
         print(orbital_name[i] + str(remain), end='  ')
-        i += 1
 
-    return ''
+    print()
