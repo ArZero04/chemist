@@ -108,7 +108,7 @@ def get_func(input):
             return
         elif args == 1:
             if func == 'mass' or func == 'getmass':
-                print(action(*input[2:], True))
+                print(action(*input[2:], True)) if len(input[2:]) == 1 else print('Invalid arguments!')
                 return
             print(action(*input[2:])) if len(input[2:]) == 1 else print('Invalid arguments!')
             return
