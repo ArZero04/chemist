@@ -35,7 +35,7 @@ def calc(input, specific):
         result = n1 + n2
     if op == '-':
         result = n1 - n2
-    if op == '*':
+    if op == '*' or op == 'x':
         result = n1 * n2
     if op == '/':
         if n2 == 0:
